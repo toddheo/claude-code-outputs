@@ -16,14 +16,15 @@
 
 ## 리스크 & 법무
 
-* [7. 리스크 시나리오 (Worst-Case 3종)](chapters/07_risk.md)
-* [8. 법적 보호 구조 — 투자금 2억원 안전 설계](chapters/08_legal.md)
+* [7. 리스크 시나리오 (Worst-Case 5종)](chapters/07_risk.md)
+* [8. 법적 보호 구조 — 4중 레이어 + 5가지 계약 체계](chapters/08_legal.md)
 
 ## 운영 계획
 
 * [9. CFO 보상 모델 및 수익 배분](chapters/09_cfo.md)
 * [10. 실행 로드맵](chapters/10_roadmap.md)
 * [11. 투자 의사결정 체크리스트](chapters/11_checklist.md)
+* [12. 마케팅 전략](chapters/12_marketing.md)
 
 ## 부록
 
