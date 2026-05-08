@@ -8,7 +8,7 @@
   <!-- Open Graph / SNS 공유 썸네일 -->
   <meta property="og:title" content="군 장병 맞춤형 금융사고 예방 및 저축 습관 형성 제안서">
   <meta property="og:description" content="(주)티웨이브 아임인(imin) — 안전성·유동성·소셜 동기부여가 결합된 군 장병 빚투 예방 솔루션. 누적 거래액 2.6조 원, 연체율 0.22%">
-  <meta property="og:image" content="https://toddheo.github.io/claude-code-outputs/imin-military/.gitbook/assets/imin_cover.png">
+  <meta property="og:image" content="https://toddheo.github.io/claude-code-outputs/imin-military/assets/imin_cover.png">
   <meta property="og:url" content="https://toddheo.github.io/claude-code-outputs/imin-military/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ko_KR">
@@ -17,7 +17,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="군 장병 맞춤형 금융사고 예방 및 저축 습관 형성 제안서">
   <meta name="twitter:description" content="(주)티웨이브 아임인(imin) — 안전성·유동성·소셜 동기부여가 결합된 군 장병 빚투 예방 솔루션">
-  <meta name="twitter:image" content="https://toddheo.github.io/claude-code-outputs/imin-military/.gitbook/assets/imin_cover.png">
+  <meta name="twitter:image" content="https://toddheo.github.io/claude-code-outputs/imin-military/assets/imin_cover.png">
 
   <!-- Pretendard 폰트 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
@@ -37,13 +37,26 @@
     body, .sidebar, .content, h1, h2, h3, h4, p, li, a {
       font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif !important;
     }
-    .sidebar {
-      border-right: 1px solid #e8e8e8;
+    aside.sidebar {
+      background-color: #ffffff !important;
+      border-right: 1px solid #e8e8e8 !important;
+    }
+    .sidebar-nav a {
+      color: #222222 !important;
     }
     .sidebar-nav strong {
-      color: #111111;
-      font-size: 0.78rem;
+      color: #111111 !important;
+      font-size: 0.75rem;
       letter-spacing: 0.02em;
+      display: block;
+      padding: 10px 0 4px 0;
+    }
+    .sidebar-nav a:hover {
+      color: #6B4EFF !important;
+    }
+    .app-name a {
+      color: #111111 !important;
+      font-weight: 700;
     }
   </style>
 </head>
@@ -54,6 +67,7 @@
     window.$docsify = {
       name: '아임인(imin) 군 장병 제안서',
       repo: '',
+      basePath: '/claude-code-outputs/imin-military/',
       loadSidebar: true,
       loadNavbar: false,
       coverpage: false,
