@@ -1,12 +1,3 @@
-<!-- _sidebar.md -->
-
-<div style="padding:16px 0 8px 0; text-align:center;">
-  <img src=".gitbook/assets/imin_cover.png" style="width:100%;border-radius:8px;margin-bottom:8px;" />
-  <div style="font-size:11px;color:#888;line-height:1.4;">(주)티웨이브<br>아임인(imin) 군 장병 제안서</div>
-</div>
-
----
-
 - [📋 표지 및 제안서 개요](README.md)
 
 **제1장. 제안 배경 및 당면 과제**
