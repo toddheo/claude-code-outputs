@@ -1,166 +1,157 @@
 # /new-proposal — 아임인(imin) 제안서 자동 생성 스킬
 
-## 역할
-이 스킬은 (주)티웨이브 아임인(imin) 서비스의 B2G/B2B 제안서를 신규 제작하는 워크플로우입니다.
-`_proposal_template/` 디렉토리를 기반으로 대상 기관에 맞춘 GitBook 제안서를 생성하고 GitHub Pages에 배포합니다.
-
----
-
-## 실행 방법
+## 사용법
 ```
-/new-proposal [대상기관명] [슬러그(영문)]
-예: /new-proposal 고용노동부 employment
-예: /new-proposal 신한은행 shinhan-bank
+/new-proposal [슬러그]
+예: /new-proposal employment
+예: /new-proposal shinhan-bank
 ```
-인수가 없으면 사용자에게 질문하세요.
+
+슬러그를 생략하면 `brief/` 폴더의 파일 목록을 보여주고 선택하게 하세요.
 
 ---
 
-## Step 1. 기본 정보 수집
+## Step 0. 브리프 파일 확인
 
-사용자에게 다음을 확인하세요 (아직 파악되지 않은 경우만):
+**반드시 먼저 브리프 파일을 읽으세요.**
 
-| 항목 | 설명 | 예시 |
-|------|------|------|
-| `{{대상기관}}` | 제출처 공식 기관명 | 고용노동부 청년고용정책과 |
-| `{{슬러그}}` | GitHub Pages URL용 영문 경로 | employment |
-| `{{담당부서}}` | 수신 부서/담당자 | 청년복지팀 |
-| `{{제출일}}` | 제출 예정일 (YYYY년 MM월) | 2026년 6월 |
-| `{{핵심페인포인트}}` | 이 기관이 겪는 핵심 문제 1~2줄 | 청년층 금융 부채 증가, 사회 초년생 금융 교육 부재 |
-| `{{협업형태}}` | B2G / B2B / 파트너십 | B2G |
-| `{{타겟유저}}` | 서비스 대상 최종 이용자 | 취업 준비 청년 (만 19~29세) |
-| `{{협업RR}}` | 기관 역할 / 티웨이브 역할 요약 | 기관: 채널 제공·홍보 / 티웨이브: 플랫폼 운영 |
+```
+brief/[슬러그].md           ← 핵심 컨텍스트
+brief/_refs/[슬러그]/       ← 참고자료 (있으면 전부 읽기)
+```
+
+브리프 파일이 없으면 사용자에게 안내:
+> "`brief/[슬러그].md` 파일이 없습니다. `brief/_template.md`를 복사해서 작성해 주세요."
+
+브리프 파일의 **모든 필드**를 읽고 내용을 내재화한 뒤 Step 1로 진행하세요.
+참고자료가 있으면 Read 툴로 전부 읽어 컨텍스트를 보강하세요.
 
 ---
 
-## Step 2. 디렉토리 생성
+## Step 1. 불명확한 항목 확인 (최소화)
 
-`_proposal_template/` 전체를 `{{슬러그}}_제안서_gitbook/` 으로 복사하세요.
+브리프에서 비어 있거나 `{{...}}`로 남은 항목 중 **제안서 품질에 결정적인 항목만** 질문하세요.
+모든 걸 묻지 말고, 추론 가능한 건 합리적으로 채우세요.
+
+반드시 확인해야 하는 항목:
+- 슬로건이 없으면 브리프 내용 기반으로 2~3안 제시 후 선택 요청
+- 참고자료에서 수치를 못 찾은 페인포인트가 있으면 사용자에게 확인
+
+---
+
+## Step 2. 디렉토리 생성 및 파일 복사
 
 ```bash
-cp -r _proposal_template/ {{슬러그}}_제안서_gitbook/
+cp -r _proposal_template/ [슬러그]_제안서_gitbook/
+cp brief/_refs/[슬러그]/* [슬러그]_제안서_gitbook/  # 참고자료가 있으면
 ```
 
 ---
 
-## Step 3. 각 파일 생성 규칙
+## Step 3. 파일 생성 순서 및 규칙
 
-아래 순서대로 파일을 작성하세요. 각 파일은 **`_proposal_template/`의 해당 파일을 기반**으로, 플레이스홀더를 실제 내용으로 교체합니다.
+브리프 내용을 **모든 챕터에 일관되게** 반영하세요.
+`_proposal_template/chapters/CHAPTERS_GUIDE.md`를 참조하여 각 챕터를 작성하세요.
 
-### 필수 작성 파일 목록
+### 작성 순서
 
-| 파일 | 핵심 작성 포인트 |
-|------|----------------|
-| `README.md` | 표지, Executive Summary, 5대 핵심 제안, 신뢰 지표 표 |
-| `chapters/01_background.md` | 대상 기관·분야의 거시 환경 변화 + 아임인 도입 필요성 |
-| `chapters/02_problem.md` | 이 기관의 핵심 페인포인트 3가지 (데이터 기반) |
-| `chapters/03_current_limitations.md` | 현행 제도·경쟁 서비스의 구조적 한계 |
-| `chapters/04_urgency.md` | 골든타임: 지금 도입하지 않으면 어떤 일이 벌어지는가 |
-| `chapters/05_objectives.md` | 도입 목적 및 아임인의 전략적 포지셔닝 |
-| `chapters/06_service_intro.md` | 아임인 서비스 소개 (스테이지: 5·7·9·11·13개월 홀수 순번계, 납입 10만~160만 원) |
-| `chapters/07_cooperation.md` | 기관-티웨이브 협력 체계 및 R&R |
-| `chapters/08_roadmap.md` | 단계별 추진 로드맵 (준비→파일럿→확대) |
-| `chapters/09_effects.md` | 정량·정성 기대 효과 및 KPI |
-| `chapters/10_company.md` | 제안사 소개 (수치: 누적 3조 863억, 60만 7,169명, 연체율 0.22%, 2026년 4월 기준) |
-| `appendix/A_legal.md` | 법적·제도적 검토 (전자금융거래법, 개인정보보호법 등) |
-| `appendix/B_simulation.md` | 재무 시뮬레이션 (참여 규모별 효과) |
+1. `README.md` — 표지, Executive Summary, 5대 핵심 제안, 신뢰 지표
+2. `chapters/01_background.md` ~ `chapters/16_cases.md`
+3. `chapters/17_company.md` ~ `chapters/19_partnerships.md`
+4. `appendix/A_legal.md`, `appendix/B_simulation.md`
+5. `_sidebar.md` — 챕터 목록 정리
+6. `index.html` — 플레이스홀더 교체
 
----
+### 각 파일 필수 요소
 
-## Step 4. 불변 사실 — 항상 이 수치를 사용할 것
-
-아임인 공인 수치 (2026년 4월 기준):
-- 누적 거래액: **3조 863억 원** (3,086,308,100,000원)
-- 총 참여 인원: **60만 7,169명**
-- 연체율: **0.22%** (제1금융권 수준)
-- 서비스 연수: **8년 이상** (2016년~)
-- 연간 매출: **116억 원** (2025년 기준)
-- 주요 파트너: **신한은행, 케이뱅크(KBank)**
-- 대표이사: **서재준**
-
-스테이지 구성 (변경 불가):
-- **5·7·9·11·13개월 홀수 순번계**
-- 납입 범위: **월 10만 원 ~ 최대 160만 원**
-
-금지 단어:
-- ❌ 금융감독원(금감원)
-- ❌ 규제 샌드박스
+- 파일 최상단: `**[오늘 날짜 YYYY-MM-DD]**`
+- 제목: `# X.X 챕터 제목`
+- 브리프의 페인포인트·협업 모델·기대 효과를 해당 챕터에 녹여낼 것
+- 데이터 기반 논거 우선 (브리프 수치 → 공개 통계 → 논리적 추론 순)
 
 ---
 
-## Step 5. index.html 생성
+## Step 4. index.html 플레이스홀더 교체
 
-`_proposal_template/index.html`을 복사 후 아래 항목 교체:
+`_proposal_template/index.html`에서 교체할 항목:
 
+| 플레이스홀더 | 교체 내용 |
+|------------|----------|
+| `{{제안서제목}}` | 브리프 기관명 기반 제목 |
+| `{{슬러그}}` | 브리프 slug 값 |
+| `{{대상기관}}` | 브리프 대상기관 |
+
+OG 이미지 URL:
+```
+https://toddheo.github.io/claude-code-outputs/[슬러그]-제안서/assets/imin_thumbnail.png
+```
+
+basePath:
 ```javascript
-// title, og:title, og:description 업데이트
-// basePath: '/claude-code-outputs/{{슬러그}}-제안서/'
-// name: '아임인(imin) {{대상기관}} 제안서'
-```
-
-OG 이미지는 `assets/imin_thumbnail.png` 절대 URL 사용:
-```
-https://toddheo.github.io/claude-code-outputs/{{슬러그}}-제안서/assets/imin_thumbnail.png
-```
-
-썸네일 파일을 `assets/` 폴더에 복사하세요:
-```bash
-cp 군장병_제안서_gitbook/assets/imin_thumbnail.png {{슬러그}}_제안서_gitbook/assets/
+basePath: '/claude-code-outputs/[슬러그]-제안서/',
 ```
 
 ---
 
-## Step 6. _sidebar.md 생성
+## Step 5. 불변 사실 — 항상 이 수치를 사용
 
-챕터 수와 제목에 맞게 `_sidebar.md`를 작성하세요.
-HTML 블록 없이 순수 마크다운 링크 목록만 사용하세요.
+| 항목 | 값 | 기준 |
+|------|-----|------|
+| 누적 거래액 | 3조 863억 원 | 2026년 4월 |
+| 총 참여 인원 | 60만 7,169명 | 2026년 4월 |
+| 연체율 | 0.22% | 제1금융권 수준 |
+| 서비스 연수 | 8년 이상 | 2016년~ |
+| 연간 매출 | 116억 원 | 2025년 |
+| 주요 파트너 | 신한은행, 케이뱅크(KBank) | |
+| 대표이사 | 서재준 | |
+
+**스테이지:** 5·7·9·11·13개월 홀수 순번계 (3·6·12·18 절대 사용 금지)
+**납입 범위:** 월 10만 원 ~ 최대 160만 원
+**금지 단어:** 금융감독원(금감원), 규제 샌드박스
 
 ---
 
-## Step 7. GitHub Pages 배포
+## Step 6. GitHub Pages 배포
 
 ```bash
-# 1. main 브랜치에 커밋
-git add {{슬러그}}_제안서_gitbook/
-git commit -m "feat: {{대상기관}} 제안서 신규 추가"
+# main 브랜치 커밋
+git add [슬러그]_제안서_gitbook/
+git commit -m "feat: [대상기관] 제안서 신규 추가"
 
-# 2. gh-pages 워크트리에 복사 후 배포
-git worktree add /tmp/gh-pages-new gh-pages
-cp -r {{슬러그}}_제안서_gitbook/. /tmp/gh-pages-new/{{슬러그}}-제안서/
+# gh-pages 배포
+git worktree add /tmp/gh-pages-new gh-pages 2>/dev/null || true
+cd /tmp/gh-pages-new && git pull origin gh-pages
+cp -r "c:/Users/티웨이브/Desktop/티웨이브/업무/96_안티그래비티/test/[슬러그]_제안서_gitbook/." "/tmp/gh-pages-new/[슬러그]-제안서/"
 cd /tmp/gh-pages-new
-git add {{슬러그}}-제안서/
-git commit -m "deploy: {{대상기관}} 제안서 배포"
+git add [슬러그]-제안서/
+git commit -m "deploy: [대상기관] 제안서 배포"
 git push origin gh-pages
-
-# 3. 배포 URL 확인
-echo "https://toddheo.github.io/claude-code-outputs/{{슬러그}}-제안서/"
 ```
 
 ---
 
-## Step 8. 완료 보고
-
-완료 시 다음 형식으로 보고하세요:
+## Step 7. 완료 보고
 
 ```
-✅ {{대상기관}} 제안서 생성 완료
+✅ [대상기관] 제안서 생성 완료
 
-📄 로컬 경로: {{슬러그}}_제안서_gitbook/
-🌐 배포 URL: https://toddheo.github.io/claude-code-outputs/{{슬러그}}-제안서/
-📑 총 챕터: X개 파일
+📄 로컬:  [슬러그]_제안서_gitbook/
+🌐 URL:   https://toddheo.github.io/claude-code-outputs/[슬러그]-제안서/
+📑 챕터:  총 XX개 파일
 ```
 
 ---
 
-## 품질 기준 (체크리스트)
+## 품질 체크리스트
 
+- [ ] 브리프의 페인포인트가 1·2·3장에 일관되게 반영됨
+- [ ] 브리프의 협업 R&R이 4·7장에 구체적으로 기술됨
+- [ ] 브리프의 기대 효과가 5장 KPI로 연결됨
 - [ ] 금지 단어(금감원, 규제 샌드박스) 없음
 - [ ] 아임인 공인 수치 정확히 사용 (2026년 4월 기준)
-- [ ] 스테이지 5·7·9·11·13 홀수 순번계 반영
+- [ ] 스테이지 5·7·9·11·13 홀수 순번계만 사용
 - [ ] 납입 범위 10만~160만 원 반영
 - [ ] OG 썸네일 절대 URL 사용
 - [ ] basePath 올바르게 설정
-- [ ] .nojekyll 루트에 존재 확인
-- [ ] 모든 챕터 링크 _sidebar.md에 포함
-- [ ] 날짜 헤더 (`**[YYYY-MM-DD]**`) 각 파일 상단에 포함
+- [ ] 각 파일 날짜 헤더 포함
 - [ ] 대표이사 서재준 반영
