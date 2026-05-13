@@ -1,6 +1,7 @@
 ---
-slug: {{슬러그}}           # GitHub Pages URL 경로 (영문, 하이픈 사용)
-date: {{YYYY-MM-DD}}       # 작성일
+slug: {{슬러그}}                      # GitHub Pages URL 경로 (영문, 하이픈 사용)
+category: {{domestic|global|web3}}   # 제안서 분류
+date: {{YYYY-MM-DD}}                  # 작성일
 ---
 
 # {{대상기관}} 제안 브리프
